@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1275.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "sharp": "^0.31.2",
+    "stream": "^0.0.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.109",
+    "@types/sharp": "^0.31.0",
+    "aws-sdk": "^2.1275.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "sharp": "^0.31.2",
+    "stream": "^0.0.2",
+    "typescript": "^4.9.4"
+  },
+  "scripts": {
+    "build": "tsc --outDir build"
+  }
+}

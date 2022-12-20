@@ -1,0 +1,40 @@
+service: testLambda
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-localstack
+
+custom:
+  localstack:
+    debug: true
+    stages:
+      - local
+    host: http://localhost
+    edgePort: 4566
+    autoStart: true
+    endpointFile: config.json
+    
+
+provider:
+  name: aws
+  region: ap-southeast-2
+  runtime: nodejs14.x
+  environment:
+    STAGE: local
+
+
+functions:
+  processThumbnail:
+    handler: handler.processThumbnail
+    events:
+    - http:
+        path: processThumbnail
+        method: get
+  imageNotification:
+    handler: handler.imageNotification
+    events:
+    - http:
+        path: imageNotification
+        method: post
+

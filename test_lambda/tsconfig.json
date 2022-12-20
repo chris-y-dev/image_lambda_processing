@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "commonjs",
+      "sourceMap": true,
+      "baseUrl": "./",
+      "allowJs": true,
+      "strict": true,
+      "preserveConstEnums": true,
+      "noEmit": true,
+      "moduleResolution":"node",
+      "esModuleInterop": true, 
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true, 
+      "isolatedModules": true
+    }
+}
