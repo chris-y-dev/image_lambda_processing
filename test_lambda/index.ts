@@ -2,7 +2,7 @@ import { Context, APIGatewayProxyCallback, S3Event } from 'aws-lambda';
 import { S3 } from 'aws-sdk';
 import { ByteBuffer } from 'aws-sdk/clients/cloudtrail';
 const fs = require('fs');
-import sharp from 'sharp'
+import sharp from 'sharp';
 const path = require('path');
 const AWS = require("aws-sdk");
 const { callbackify } = require('util');
