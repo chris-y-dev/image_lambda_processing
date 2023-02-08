@@ -27,7 +27,7 @@ awslocal lambda create-function \
 	--region ap-southeast-2 \
     --function-name imageNotification \
     --role lambda-s3-role \
-    --handler build/index.handler \
+    --handler index.handler \
     --runtime nodejs14.x \
     --zip-file fileb:///docker-entrypoint-initaws.d/ThumbnailLambda.zip
 
@@ -36,3 +36,6 @@ aws s3api put-bucket-notification-configuration \
     --bucket input \
     --notification-configuration file:///docker-entrypoint-initaws.d/s3notification.json \
     --endpoint-url http://localhost:4566
+
+#Command for uploading image
+#aws s3api put-object --endpoint-url http://localhost:4566 --body test_lambda/player_original.png --bucket input --key player_original.png
