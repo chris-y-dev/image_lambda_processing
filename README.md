@@ -1,6 +1,6 @@
 # Upload image and auto-resize: A local AWS and API application
 
-![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/thumbnail_program_workflow.jpg?raw=true)
+![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/thumbnailapi_program_workflow.jpg?raw=true)
 
 This application includes a local API that allows you to upload an image. If the image is in a valid format (jpg/png), the image will be uploaded to a locally hosted AWS S3 bucket, which triggers a Lambda Function to generate and upload re-sized thumnbnails of the image to these following sizes:
 
