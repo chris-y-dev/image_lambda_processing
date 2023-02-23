@@ -2,20 +2,20 @@
 
 ![alt](https://./readme_images/thumbnail_program_workflow.jpg)
 
-This application includes a local API that allows you to upload an image. If it is a valid format, the image will be uploaded onto a locally hosted AWS S3 bucket, which triggers a Lambda Function to automatically generate re-sized thumnbnails of the image.
+This application includes a local API that allows you to upload an image. If the image is in a valid format (jpg/png), the image will be uploaded to a locally hosted AWS S3 bucket, which triggers a Lambda Function to generate and upload re-sized thumnbnails of the image to these following sizes:
 
-- small: 200x200
-- medium: 350x350
-- large: 500x500
-- x-large: 700x700
+- small: 200x200px
+- medium: 350x350px
+- large: 500x500px
+- x-large: 700x700px
 
 ---
 
-## How to run the application
+## How to run the application 🏃‍♂️🏃‍♀️
 
-### 1. Clone the repository
+### 1. Clone the repository 💾
 
-### 2. Build and start Docker containers
+### 2. Build and start Docker containers 🐳
 
 In the root directory, run this command to build the Docker containers:
 
@@ -25,7 +25,7 @@ After the build, run command to start the Docker containers:
 
 `docker-compose up -d`
 
-### 3. Open up the API on your browser
+### 3. Open up the API on your browser 💻
 
 `http://localhost:5035/swagger/index.html`
 
@@ -33,7 +33,7 @@ After the build, run command to start the Docker containers:
 
 image
 
-### 4. Access the AWS S3 buckets on your browser
+### 4. Access the AWS S3 buckets on your browser ☁
 
 The "input" bucket is where the original uploaded image will be saved to.
 `http://localhost:4566/input`
@@ -45,7 +45,7 @@ Images uploaded to the "input" bucket will trigger the Lambda function, which up
 ![alt](https://./readme_images/input_bucket_screenshot.jpg)
 ![alt](https://./readme_images/output_bucket_screenshot.jpg)
 
-### 5. Upload an image using the API
+### 5. Upload an image using the API 🖼
 
 You can upload your own image (.jpg or .png files), or try the cool_cat.jpg provided in the directory root :)
 
@@ -61,7 +61,7 @@ The Lambda Function will then retrieve this image uploaded and process it into d
 
 ![alt](https://./readme_images/uploaded_input_bucket.jpg)
 
-### 6. Try saving the re-sized image!
+### 6. Try saving the re-sized image! 🖼🖼🖼🖼
 
 You can save and view the processed images by putting them in to the URL :)
 
