@@ -36,4 +36,4 @@ aws s3api put-bucket-notification-configuration \
     --endpoint-url http://localhost:4566
 
 #Command for uploading image
-# aws s3api put-object --endpoint-url http://localhost:4566 --body ../cool_cat.jpg --bucket input --key cool_cat.jpg
+# aws s3api put-object --endpoint-url http://localhost:4566 --body thumbnail_lambda/player_original.png --bucket input --key player_original.png

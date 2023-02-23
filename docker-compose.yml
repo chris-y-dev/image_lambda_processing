@@ -29,9 +29,9 @@ services:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./scripts/init_s3.sh:/docker-entrypoint-initaws.d/init_s3.sh"
-      - "./test_lambda/ThumbnailLambda.zip:/docker-entrypoint-initaws.d/ThumbnailLambda.zip"
-      - "./test_lambda/iam_policy.json:/docker-entrypoint-initaws.d/iam_policy.json"
-      - "./test_lambda/s3notification.json:/docker-entrypoint-initaws.d/s3notification.json"
+      - "./thumbnail_lambda/ThumbnailLambda.zip:/docker-entrypoint-initaws.d/ThumbnailLambda.zip"
+      - "./thumbnail_lambda/iam_policy.json:/docker-entrypoint-initaws.d/iam_policy.json"
+      - "./thumbnail_lambda/s3notification.json:/docker-entrypoint-initaws.d/s3notification.json"
     
 
   

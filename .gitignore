@@ -7,4 +7,5 @@ thumbnailAPI/obj
 thumbnailAPI/bin
 thumbnailAPI.Application/obj
 thumbnailAPI.Application/bin
-test_lambda/README.md
+thumbnail_lambda/README.md
+./scripts/CRLF_init_s3.sh
