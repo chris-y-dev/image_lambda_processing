@@ -15,8 +15,6 @@ This application includes a local API that allows you to upload an image. If the
 
 ## 1. Clone the repository 💾
 
----
-
 ## 2. Build and start Docker containers 🐳
 
 In the root directory, run this command to build the Docker containers:
@@ -33,7 +31,7 @@ After the build, run command to start the Docker containers:
 
 `http://localhost:5035/swagger/index.html`
 
-## ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/thumbnailapi_screenshot.jpg?raw=true)
+![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/thumbnailapi_screen.jpg?raw=true)
 
 ## 4. Access the AWS S3 buckets on your browser ☁
 
@@ -45,8 +43,6 @@ Images uploaded to the "input" bucket will trigger the Lambda function, which up
 `http://localhost:4566/output`
 ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/input_bucket_screenshot.jpg?raw=true)
 ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/output_bucket_screenshot.jpg?raw=true)
-
----
 
 ## 5. Upload an image using the API 🖼
 
@@ -62,8 +58,6 @@ After successfully uploading, you can find the original image in the "input" buc
 
 The Lambda Function will then retrieve this image uploaded and process it into different sizes, and upload them all to the "output" bucket
 ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/uploaded_output_bucket.jpg?raw=true)
-
----
 
 ## 6. Try saving the re-sized image! 🖼🖼🖼🖼
 
