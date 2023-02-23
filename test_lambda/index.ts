@@ -36,8 +36,6 @@ export const handler = async (event: S3Event, context: Context) => {
       s3BucketEndpoint: false,
     });
 
-  console.log(event.Records[0])
-
   //Event values
   const bucketOfEvent: string = event.Records[0].s3.bucket.name
   const keyOfEvent: string = event.Records[0].s3.object.key
@@ -45,9 +43,7 @@ export const handler = async (event: S3Event, context: Context) => {
   //Retrieve image from s3
   const imageObject: S3.GetObjectOutput = await retrieveThumbnailFromS3(s3, bucketOfEvent, keyOfEvent);
 
-  // console.log("BYTES:::::::::::::::::::::: ", imageObject.Body.toString('hex'))
   const imageFormat: ImageHeader | null = await validateObjectIsImage(imageObject.Body!.toString('hex'))
-  console.log("FORMAT====================", imageFormat, keyOfEvent)
 
   if(imageFormat==null){
     return {
