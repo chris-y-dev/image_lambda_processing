@@ -59,7 +59,7 @@ After successfully uploading through the API, you can find the original image in
 
 The Lambda Function will then retrieve this image uploaded and process it into different sizes, and upload them all to the "output" bucket
 
-![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/uploaded_output_bucket.jpg?raw=true)
+![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/processed_output_bucket.jpg?raw=true)
 
 ## 6. Try saving the re-sized image! 🖼🖼🖼🖼
 
