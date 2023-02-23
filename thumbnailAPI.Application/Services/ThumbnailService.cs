@@ -1,5 +1,6 @@
 ﻿using Amazon.Runtime;
 using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using Microsoft.AspNetCore.Http;
 
@@ -17,23 +18,32 @@ public class ThumbnailService : IThumbnailService
 
     public async Task<Boolean> UploadImageToS3Bucket(IFormFile file)
     {
-
-        var s3Client = _awsConnectionFactory.GenerateS3Client();
-        
-        var newMemoryStream = new MemoryStream();
-        await file.CopyToAsync(newMemoryStream);
-        
-        var uploadRequest = new TransferUtilityUploadRequest
+        try
         {
-            InputStream = newMemoryStream,
-            BucketName = "/test",
-            ContentType = file.ContentType,
-            Key = file.FileName,
-        };
-        
-        var fileTransferUtility = new TransferUtility(s3Client);
-        await fileTransferUtility.UploadAsync(uploadRequest);
 
-        return true;
+
+            var s3Client = _awsConnectionFactory.GenerateS3Client();
+
+            var newMemoryStream = new MemoryStream();
+            await file.CopyToAsync(newMemoryStream);
+
+            var uploadRequest = new TransferUtilityUploadRequest
+            {
+                InputStream = newMemoryStream,
+                BucketName = "input",
+                ContentType = file.ContentType,
+                Key = file.FileName,
+            };
+
+            var fileTransferUtility = new TransferUtility(s3Client);
+            await fileTransferUtility.UploadAsync(uploadRequest);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            return false;
+        }
     }
 }

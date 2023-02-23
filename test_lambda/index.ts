@@ -2,7 +2,7 @@ import { Context, APIGatewayProxyCallback, S3Event } from 'aws-lambda';
 import { S3 } from 'aws-sdk';
 import { ByteBuffer } from 'aws-sdk/clients/cloudtrail';
 const fs = require('fs');
-import sharp from 'sharp';
+const sharp = require('sharp');
 const path = require('path');
 const AWS = require("aws-sdk");
 const { callbackify } = require('util');
@@ -47,14 +47,14 @@ export const handler = async (event: S3Event, context: Context) => {
 
   // console.log("BYTES:::::::::::::::::::::: ", imageObject.Body.toString('hex'))
   const imageFormat: ImageHeader | null = await validateObjectIsImage(imageObject.Body!.toString('hex'))
-  console.log("FORMAT====================", imageFormat)
+  console.log("FORMAT====================", imageFormat, keyOfEvent)
 
   if(imageFormat==null){
     return {
-      statusCode: 200,
+      statusCode: 400,
       body: JSON.stringify(
         {
-          message: 'File successfulyl uploaded',
+          message: 'Unable to convert uploaded file. Please upload an image file with supported format (.jpg, .png)',
         },
         null,
         2
@@ -63,7 +63,7 @@ export const handler = async (event: S3Event, context: Context) => {
   }
 
   //Logic + upload
-  const uploadResponses: S3.ManagedUpload.SendData[]  = await resizeThumbnailsAndUpload(s3, imageObject)
+  const uploadResponses: S3.ManagedUpload.SendData[]  = await resizeThumbnailsAndUpload(s3, imageObject, keyOfEvent, imageFormat)
   
   return {
     statusCode: 200,
@@ -78,7 +78,7 @@ export const handler = async (event: S3Event, context: Context) => {
   };
 };
 
-async function resizeThumbnailsAndUpload(s3: AWS.S3, imageObjectOriginal: S3.GetObjectOutput){
+async function resizeThumbnailsAndUpload(s3: AWS.S3, imageObjectOriginal: S3.GetObjectOutput, imageKey: string, imageFormat: ImageHeader){
 
   const sizesAndNames: ImageSize[] = [
     {
@@ -119,7 +119,7 @@ async function resizeThumbnailsAndUpload(s3: AWS.S3, imageObjectOriginal: S3.Get
 
       try {
 
-        var uploadResponse: S3.ManagedUpload.SendData  = await putObject(s3, resizedImageBuffer, newSize);
+        var uploadResponse: S3.ManagedUpload.SendData  = await putObject(s3, resizedImageBuffer, newSize, imageKey, imageFormat);
         resizedOrUploadedResponses.push(uploadResponse)
   
       } catch (err){
@@ -141,7 +141,7 @@ async function resizeThumbnailsAndUpload(s3: AWS.S3, imageObjectOriginal: S3.Get
   return resizedOrUploadedResponses;
 }
 
-async function retrieveThumbnailFromS3(s3: AWS.S3, bucket: string, key: string): Promise<S3.GetObjectOutput>{
+async function retrieveThumbnailFromS3(s3: AWS.S3, bucket: string, key : string): Promise<S3.GetObjectOutput>{
 
   const imageObject: S3.GetObjectOutput  = await s3.getObject(
     { 
@@ -152,13 +152,16 @@ async function retrieveThumbnailFromS3(s3: AWS.S3, bucket: string, key: string):
   return imageObject
 }
 
-async function putObject(s3: S3, resizedImageBuffer: Buffer, imageSize: ImageSize): Promise<S3.ManagedUpload.SendData>{
+async function putObject(s3: S3, resizedImageBuffer: Buffer, imageSize: ImageSize, imageKey: string, imageFormat: ImageHeader): Promise<S3.ManagedUpload.SendData>{
+
+  imageKey = imageKey.split(".")[0]
+
 
   return await s3.upload(
     {
       Body: resizedImageBuffer,
       Bucket: "output", 
-      Key: "player_" + imageSize.size + ".png"
+      Key: imageKey + "_" + imageSize.size + "." +imageFormat.format
     }
   ).promise();
 }
@@ -172,42 +175,25 @@ async function validateObjectIsImage(imageObjectString: string): Promise<ImageHe
     },
     { 
       "format": "jpg",
-      "hexPattern": "FFD8FFE0"
-    },
-    { 
-      "format": "gif",
-      "hexPattern": "474946383761"
-    },
-    { 
-      "format": "tif",
-      "hexPattern": "49492a00"
-    },
-    { 
-      "format": "tiff",
-      "hexPattern": "4d4d002a"
+      "hexPattern": "ffd8ff"
     }
   ]
 
-  let [testPng, testJpg, testGif, testTif, testTiff ] = await Promise.all([
+  let [testPng, testJpg ] = await Promise.all([
     ifRegexMatch_ReturnRegexData_ElseReturnNull(imageHeaders[0], imageObjectString),
     ifRegexMatch_ReturnRegexData_ElseReturnNull(imageHeaders[1], imageObjectString),
-    ifRegexMatch_ReturnRegexData_ElseReturnNull(imageHeaders[2], imageObjectString),
-    ifRegexMatch_ReturnRegexData_ElseReturnNull(imageHeaders[3], imageObjectString),
-    ifRegexMatch_ReturnRegexData_ElseReturnNull(imageHeaders[4], imageObjectString)
   ])
 
   if(testPng != null) return testPng
   if(testJpg != null) return testJpg
-  if(testGif != null) return testGif
-  if(testTif != null) return testTif
-  if(testTiff != null) return testTiff
 
+  console.log("ERROR: OBJECT IS NOT AN IMAGE")
   return null
 }
 
 async function ifRegexMatch_ReturnRegexData_ElseReturnNull(imageHeader: ImageHeader, imageBufferString: string): Promise<ImageHeader | null>{
 
-  console.log(imageHeader.hexPattern)
+  console.log(imageHeader.hexPattern, imageBufferString)
 
   return new RegExp(`^${imageHeader.hexPattern}`).test(imageBufferString)? imageHeader : null;
 

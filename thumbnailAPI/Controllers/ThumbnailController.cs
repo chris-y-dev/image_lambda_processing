@@ -11,10 +11,6 @@ namespace thumbnailAPI.Controllers;
 [Route("thumbnail")]
 public class ThumbnailController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
     private readonly ILogger<ThumbnailController> _logger;
     private readonly IThumbnailService _thumbnailService;
@@ -25,21 +21,6 @@ public class ThumbnailController : ControllerBase
         _thumbnailService = thumbnailService;
     }
 
-    [HttpGet(Name = "Check")]
-    public IEnumerable<WeatherForecast> Get()
-    {
-        var config = new AmazonS3Config{ ServiceURL = "http://localhost:4566" };
-        var s3Client = new AmazonS3Client(config);
-        
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-    }
-
     [HttpPost]
     public async Task<IActionResult> UploadImage(IFormFile file)
     {
@@ -48,10 +29,15 @@ public class ThumbnailController : ControllerBase
             return BadRequest();
         }
 
+        if (!(file.ContentType == "image/jpeg" || file.ContentType == "image/png"))
+        {
+            return BadRequest("File uploaded was not of supported image type (.jpg, .jpeg and .png only)");
+        }
+
         var uploaded = await _thumbnailService.UploadImageToS3Bucket(file);
 
-        if (uploaded) return Ok(file.FileName + " Uploaded");
-        
+        if (uploaded) return Ok("File: " + file.FileName + ", Type: " + file.ContentType + " Successfully Uploaded");
+
         return BadRequest();
     }
 }

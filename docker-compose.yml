@@ -8,13 +8,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 5035:5035
+      - "5035:5035"
 
   localstack:
     container_name: localstack_thumbnail
     image: localstack/localstack:latest
     ports:
-      - "127.0.0.1:4566:4566"
+      - "4566:4566"
     environment:
       - AWS_DEFAULT_REGION=ap-southeast-2
       - DEBUG=1
@@ -23,8 +23,8 @@ services:
       - HOST_TMP_FOLDER=${TMPDIR}
       - DATA_DIR=/tmp/localstack/data
       - EAGER_SERVICE_LOADING=1
-      - AWS_ACCESS_KEY_ID="foo"
-      - AWS_SECRET_ACCESS_KEY="foo"
+      - AWS_ACCESS_KEY_ID="test"
+      - AWS_SECRET_ACCESS_KEY="test"
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
