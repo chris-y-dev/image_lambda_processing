@@ -25,8 +25,6 @@ After the build, run command to start the Docker containers:
 
 `docker-compose up -d`
 
----
-
 ## 3. Open up the API on your browser 💻
 
 `http://localhost:5035/swagger/index.html`
@@ -36,12 +34,15 @@ After the build, run command to start the Docker containers:
 ## 4. Access the AWS S3 buckets on your browser ☁
 
 The "input" bucket is where the original uploaded image will be saved to.
+
 `http://localhost:4566/input`
+
+![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/input_bucket_screenshot.jpg?raw=true)
 
 Images uploaded to the "input" bucket will trigger the Lambda function, which uploads the re-sized images into the "output" bucket.
 
 `http://localhost:4566/output`
-![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/input_bucket_screenshot.jpg?raw=true)
+
 ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/output_bucket_screenshot.jpg?raw=true)
 
 ## 5. Upload an image using the API 🖼
@@ -52,11 +53,12 @@ You can upload your own image (.jpg or .png files), or try the cool_cat.jpg prov
 
 ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/cool_cat.jpg?raw=true)
 
-After successfully uploading, you can find the original image in the "input" bucket.
+After successfully uploading through the API, you can find the original image in the "input" bucket.
 
 ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/uploaded_input_bucket.jpg?raw=true)
 
 The Lambda Function will then retrieve this image uploaded and process it into different sizes, and upload them all to the "output" bucket
+
 ![alt text](https://github.com/chrisyuen976/thumbnailAPI/blob/master/readme_images/uploaded_output_bucket.jpg?raw=true)
 
 ## 6. Try saving the re-sized image! 🖼🖼🖼🖼
