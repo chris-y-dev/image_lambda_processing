@@ -8,4 +8,4 @@ thumbnailAPI/bin
 thumbnailAPI.Application/obj
 thumbnailAPI.Application/bin
 thumbnail_lambda/README.md
-./scripts/CRLF_init_s3.sh
+scripts/CRLF_init_s3.sh
