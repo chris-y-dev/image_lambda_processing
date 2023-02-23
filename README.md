@@ -13,7 +13,7 @@ This application includes a local API that allows you to upload an image. If the
 
 # How to run the application 🏃‍♂️🏃‍♀️
 
-## 1. Clone the repository 💾
+## 1. Download the repository 💾
 
 ## 2. Build and start Docker containers 🐳
 
