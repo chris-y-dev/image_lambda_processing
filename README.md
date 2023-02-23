@@ -75,6 +75,6 @@ You can save and view the processed images by putting them in to the URL :)
 
 `http://localhost:4566/output/<your-image-name.jpg>`
 
-![alt](https://raw.githubusercontent.com/chrisyuen976/thumbnailapi/master/readme_images/output_images.jpg)
+![model](https://raw.githubusercontent.com/chrisyuen976/thumbnailapi/master/readme_images/output_images.jpg)
 
 ![alt](https://./readme_images/output_images.jpg)
